@@ -1,18 +1,26 @@
 {
-  "name": "gh-commit-test",
+  "name": "git-commits",
+  "description": "Fetches the 100 most recent commits from a GitHub repo (GitHub API limit), filters out any dependency updates (Dependabot, Greenkeeper, and Renovate), and attempts to filter out any GitHub pull request merges, and any Poontoon commits.",
   "version": "1.0.0",
-  "description": "",
-  "bin": "index.js",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
   "author": "Peter deHaan <peter@deseloper.com> (https://about.me/peterdehaan)",
-  "license": "MPL-2.0",
+  "bin": "cli.js",
+  "bugs": {
+    "url": "https://github.com/pdehaan/git-commits/issues"
+  },
   "dependencies": {
     "@octokit/rest": "16.21.1",
-    "axios": "0.18.0",
     "table": "5.2.3"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/pdehaan/git-commits#readme",
+  "keywords": [],
+  "license": "MPL-2.0",
+  "main": "lib.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdehaan/git-commits.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

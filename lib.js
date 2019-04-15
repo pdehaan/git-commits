@@ -1,17 +1,16 @@
-#!/usr/bin/env node
-
 const { table, getBorderCharacters } = require("table");
 const Octokit = require("@octokit/rest");
 
 const IGNORE_AUTHOR_NAMES = ["dependabot[bot]", "greenkeeper[bot]", "Renovate Bot"];
 const IGNORE_COMMITER_NAMES = ["Mozilla Pontoon", "GitHub"];
 
-const argv = process.argv.splice(2);
 const octokit = new Octokit();
 
-main(...argv);
+module.exports = {
+  getCommits
+};
 
-async function main(owner, repo, maxCommits, page=1) {
+async function getCommits(owner, repo, maxCommits, page=1) {
   if (!owner || !repo) {
     console.error(
       "Missing `owner` or `repo`.\nUSAGE: `node index {owner} {repo}"
@@ -21,20 +20,20 @@ async function main(owner, repo, maxCommits, page=1) {
   }
 
   try {
-    const res = await getCommits(owner, repo, page);
+    const res = await listCommits(owner, repo, page);
     const commits = filterCommits(res.data, maxCommits);
-    const output = formatCommits(commits);
-    console.log(output);
+    let output = formatCommits(commits);
     if (!maxCommits) {
-      console.log(`${commits.length} / ${res.data.length}`);
+      output += `\n${commits.length} / ${res.data.length}`;
     }
+    return {output, commits};
   } catch (err) {
     console.error(err);
     process.exit(3);
   }
 }
 
-async function getCommits(owner, repo, page = 1) {
+async function listCommits(owner, repo, page = 1) {
   try {
     return await octokit.repos.listCommits({
       owner,
